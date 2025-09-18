@@ -5,12 +5,13 @@ import React from 'react';
 import type { JSX } from 'react';
 
 // replace icons with your own if needed
-import { FiCircle, FiCode, FiFileText, FiLayers, FiLayout } from 'react-icons/fi';
+import { FiCircle, FiFileText, FiLayers, FiLayout } from 'react-icons/fi';
 export interface CarouselItem {
   title: string;
   description: string;
   id: number;
   icon: React.ReactNode;
+  bgImg?: string;
 }
 
 export interface CarouselProps {
@@ -28,31 +29,29 @@ const DEFAULT_ITEMS: CarouselItem[] = [
     title: 'Text Animations',
     description: 'Cool text animations for your projects.',
     id: 1,
-    icon: <FiFileText className="h-[16px] w-[16px] text-white" />
+    icon: <FiFileText className="h-[16px] w-[16px] text-white" />,
+    bgImg: 'https://images.pexels.com/photos/1595385/pexels-photo-1595385.jpeg'
   },
   {
     title: 'Animations',
     description: 'Smooth animations for your projects.',
     id: 2,
-    icon: <FiCircle className="h-[16px] w-[16px] text-white" />
+    icon: <FiCircle className="h-[16px] w-[16px] text-white" />,
+    bgImg: 'https://images.pexels.com/photos/7651922/pexels-photo-7651922.jpeg'
   },
   {
     title: 'Components',
     description: 'Reusable components for your projects.',
     id: 3,
-    icon: <FiLayers className="h-[16px] w-[16px] text-white" />
+    icon: <FiLayers className="h-[16px] w-[16px] text-white" />,
+    bgImg: 'https://images.pexels.com/photos/3862370/pexels-photo-3862370.jpeg'
   },
   {
     title: 'Backgrounds',
     description: 'Beautiful backgrounds and patterns for your projects.',
     id: 4,
-    icon: <FiLayout className="h-[16px] w-[16px] text-white" />
-  },
-  {
-    title: 'Common UI',
-    description: 'Common UI components are coming soon!',
-    id: 5,
-    icon: <FiCode className="h-[16px] w-[16px] text-white" />
+    icon: <FiLayout className="h-[16px] w-[16px] text-white" />,
+    bgImg: 'https://images.pexels.com/photos/8348468/pexels-photo-8348468.jpeg'
   }
 ];
 
@@ -71,7 +70,7 @@ export default function Carousel({
   autoplay = false,
   autoplayDelay = 3000,
   pauseOnHover = false,
-  loop = true,
+  loop = false,
   round = false
 }: CarouselProps): JSX.Element {
   const containerPadding = 16;
@@ -158,7 +157,7 @@ export default function Carousel({
     <div
       ref={containerRef}
       className={`relative overflow-hidden p-4 ${
-        round ? 'rounded-full border border-white' : 'rounded-[24px] border border-[#e4e4e4]'
+        round ? 'rounded-full border-white/85 border' : 'rounded-[24px] bg-black/60 border-white/55 border shadow-[0px_0px_65px_1px_rgba(255,255,255,0.1)]'
       }`}
       style={{
         width: `${baseWidth}px`,
@@ -192,9 +191,12 @@ export default function Carousel({
               className={`relative shrink-0 flex flex-col ${
                 round
                   ? 'items-center justify-center text-center bg-[#060010] border-0'
-                  : 'items-start justify-between bg-[#222] border border-[#fff] rounded-[12px]'
+                  : 'items-start justify-between bg-[#222] border-white/45 border rounded-[12px]'
               } overflow-hidden cursor-grab active:cursor-grabbing`}
               style={{
+                backgroundImage: `url(${item.bgImg})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
                 width: itemWidth,
                 height: round ? itemWidth : '100%',
                 rotateY: rotateY,
@@ -216,7 +218,7 @@ export default function Carousel({
         })}
       </motion.div>
       <div className={`flex w-full justify-center ${round ? 'absolute z-20 bottom-12 left-1/2 -translate-x-1/2' : ''}`}>
-        <div className="mt-4 flex w-[150px] justify-between px-8">
+        <div className="mt-4 flex w-[130px] justify-between px-8">
           {items.map((_, index) => (
             <motion.div
               key={index}
@@ -224,7 +226,7 @@ export default function Carousel({
                 currentIndex % items.length === index
                   ? round
                     ? 'bg-white'
-                    : 'bg-white/70'
+                    : 'bg-white/85'
                   : round
                     ? 'bg-[#555]'
                     : 'bg-[#525252]'
