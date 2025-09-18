@@ -4,8 +4,11 @@ import type { PanInfo } from 'framer-motion';
 import React from 'react';
 import type { JSX } from 'react';
 
-// replace icons with your own if needed
-import { FiCircle, FiFileText, FiLayers, FiLayout } from 'react-icons/fi';
+import { FiFileText } from 'react-icons/fi';
+import { MdOutlineRocketLaunch } from "react-icons/md";
+import { LuWrench } from "react-icons/lu";
+import { SiMaterialdesignicons } from "react-icons/si";
+
 export interface CarouselItem {
   title: string;
   description: string;
@@ -26,31 +29,31 @@ export interface CarouselProps {
 
 const DEFAULT_ITEMS: CarouselItem[] = [
   {
-    title: 'Text Animations',
-    description: 'Cool text animations for your projects.',
+    title: 'Project Planning & Scope Definition',
+    description: 'Outline goals, deliverables, timeline, and constraints. Align stakeholders and define success metrics.',
     id: 1,
-    icon: <FiFileText className="h-[16px] w-[16px] text-white" />,
+    icon: <FiFileText className="h-[18px] w-[18px] text-white" />,
     bgImg: 'https://images.pexels.com/photos/1595385/pexels-photo-1595385.jpeg'
   },
   {
-    title: 'Animations',
-    description: 'Smooth animations for your projects.',
+    title: 'System Design & Architecture',
+    description: 'Create software components, and data flow. Choose technologies and define interfaces.',
     id: 2,
-    icon: <FiCircle className="h-[16px] w-[16px] text-white" />,
-    bgImg: 'https://images.pexels.com/photos/7651922/pexels-photo-7651922.jpeg'
-  },
-  {
-    title: 'Components',
-    description: 'Reusable components for your projects.',
-    id: 3,
-    icon: <FiLayers className="h-[16px] w-[16px] text-white" />,
+    icon: <SiMaterialdesignicons className="h-[16px] w-[16px] text-white" />,
     bgImg: 'https://images.pexels.com/photos/3862370/pexels-photo-3862370.jpeg'
   },
   {
-    title: 'Backgrounds',
-    description: 'Beautiful backgrounds and patterns for your projects.',
+    title: 'Development & Implementation',
+    description: 'Write, integrate, and test code. Follow agile practices to ensure iterative progress and early feedback.',
+    id: 3,
+    icon: <LuWrench className="h-[18px] w-[18px] text-white" />,
+    bgImg: 'https://images.pexels.com/photos/7651922/pexels-photo-7651922.jpeg'
+  },
+  {
+    title: 'Deployment',
+    description: 'Perform QA, fix bugs, and deploy to production. Monitor performance and ensure system stability post-launch.',
     id: 4,
-    icon: <FiLayout className="h-[16px] w-[16px] text-white" />,
+    icon: <MdOutlineRocketLaunch className="h-[18px] w-[18px] text-white" />,
     bgImg: 'https://images.pexels.com/photos/8348468/pexels-photo-8348468.jpeg'
   }
 ];
@@ -166,7 +169,7 @@ export default function Carousel({
     >
       <motion.div
         className="flex"
-        drag="x"
+        drag="x" 
         {...dragProps}
         style={{
           height: itemWidth / 1.6,
@@ -195,6 +198,7 @@ export default function Carousel({
               } overflow-hidden cursor-grab active:cursor-grabbing`}
               style={{
                 backgroundImage: `url(${item.bgImg})`,
+                boxShadow: '0 0 300px rgba(0,0,0,1) inset, 0 0 500px rgba(0,0,0,0.7) inset',
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 width: itemWidth,
@@ -205,20 +209,21 @@ export default function Carousel({
               transition={effectiveTransition}
             >
               <div className={`${round ? 'p-0 m-0' : 'mb-4 p-5'}`}>
-                <span className="flex h-[28px] w-[28px] items-center justify-center rounded-full bg-[#060010]">
+                <span className="flex items-center justify-center rounded-full size-13 backdrop-blur-xs border border-white/30 hover:bg-white/20 cursor-pointer"
+                      onClick={() => window.open('https://github.com/repo-so', '_blank')}>
                   {item.icon}
                 </span>
               </div>
-              <div className="p-5">
-                <div className="mb-1 font-black text-lg text-white">{item.title}</div>
-                <p className="text-sm text-white">{item.description}</p>
+              <div className="p-5 w-[70%]">
+                <div className="mb-1 font-semibold text-lg text-white drop-shadow-lg drop-shadow-black">{item.title}</div>
+                <p className="text-sm text-white drop-shadow-lg drop-shadow-black ">{item.description}</p>
               </div>
             </motion.div>
           );
         })}
       </motion.div>
       <div className={`flex w-full justify-center ${round ? 'absolute z-20 bottom-12 left-1/2 -translate-x-1/2' : ''}`}>
-        <div className="mt-4 flex w-[130px] justify-between px-8">
+        <div className="mt-4.5 flex w-[130px] justify-between px-8">
           {items.map((_, index) => (
             <motion.div
               key={index}
@@ -232,7 +237,7 @@ export default function Carousel({
                     : 'bg-[#525252]'
               }`}
               animate={{
-                scale: currentIndex % items.length === index ? 1.2 : 1
+                scale: currentIndex % items.length === index ? 1.3 : 1
               }}
               onClick={() => setCurrentIndex(index)}
               transition={{ duration: 0.15 }}
